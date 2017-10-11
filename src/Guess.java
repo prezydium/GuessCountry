@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Array;
@@ -8,6 +9,10 @@ public class Guess {
 
     public static void main(String[] args) throws Exception {
 
+        Window window = new Window();
+
+        window.setSize(800, 600);
+        window.setVisible(true);
 
 
         File file = new File("input/panstwaeuropy.txt");
@@ -23,7 +28,8 @@ public class Guess {
             countries.add(line);
         }
         int random = (int) (Math.random() * 45);
-        System.out.println(countries.get(random)); //TEST
+        window.setOutput(countries.get(random)); //TEST !!
+        window.throwOutput();
 
         String randomCountry = countries.get(random).toLowerCase();
 
@@ -34,7 +40,9 @@ public class Guess {
         }
         sb.append(unknown);
 
-        System.out.print(unknown);
+        System.out.println(unknown);
+
+
 
         Scanner scannerinput = new Scanner(System.in);
 
