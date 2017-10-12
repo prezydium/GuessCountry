@@ -1,7 +1,4 @@
-import javax.swing.*;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -9,33 +6,26 @@ public class Guess {
 
     public static void main(String[] args) throws Exception {
 
-        Window window = new Window();
-
-        window.setSize(800, 600);
-        window.setVisible(true);
-
-
-        File file = new File("input/panstwaeuropy.txt");
-
-        Scanner scanner = new Scanner(file);
-
+        int random = (int) (Math.random() * 45);
+        File file = new File("panstwaeuropy.txt");
+        Scanner scanner = new Scanner(file, "UTF-8");
         StringBuilder sb = new StringBuilder("");
 
-        ArrayList<String> countries = new ArrayList<>();
+        ArrayList<String> countries = new ArrayList<String>();
+
 
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
             countries.add(line);
         }
-        int random = (int) (Math.random() * 45);
-        window.setOutput(countries.get(random)); //TEST !!
-        window.throwOutput();
 
         String randomCountry = countries.get(random).toLowerCase();
 
-        String letters[] = randomCountry.split("");
+        System.out.println("Poniżej widzisz ukrytą nazwę europejskiego państwa.\n" +
+                "Możesz za jednym razem zgadnąć tylko jedną literę, TYLKO MAŁE LITERY.\nMasz 10 prób, powodzenia!");
+
         String unknown = "_";
-        for (int i = 1; i < letters.length; i++) {
+        for (int i = 1; i < randomCountry.length(); i++) {
             unknown += "_";
         }
         sb.append(unknown);
@@ -44,20 +34,19 @@ public class Guess {
 
 
 
+
         Scanner scannerinput = new Scanner(System.in);
 
         for (int i = 10; i > 0; i--) {
             char guess = scannerinput.next().charAt(0);
-            System.out.println(guess);
             int x = randomCountry.indexOf(guess);
-            // for (int q = 0; q < letters.length; q++){ }
+
             if (x == -1) {
                 System.out.println("Nie ma takiej litery w nazwie tego państwa");
             } else {
-                 while (x > -1) {
-                 sb.setCharAt(x, guess);
-                    x = randomCountry.indexOf(guess, x+1);
-
+                while (x > -1) {
+                    sb.setCharAt(x, guess);
+                    x = randomCountry.indexOf(guess, x + 1);
 
                 }
                 System.out.println("Jest litera!  " + sb);
@@ -65,11 +54,14 @@ public class Guess {
             }
 
             System.out.println("Zostało " + (i - 1) + " prób");
-            if (sb.indexOf("_")== -1){
+            if (sb.indexOf("_") == -1) {
                 System.out.println("ZWYCIĘSTWO");
             }
+
+        }
+        if (sb.indexOf("_") >= 0) {
+            System.out.println("Przegrana. To : " + randomCountry);
         }
 
     }
-
 }
